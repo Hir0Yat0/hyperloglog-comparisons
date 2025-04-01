@@ -18,3 +18,8 @@ target/
 
 .vscode/
 ignore/
+
+
+# Added by cargo
+
+/target
