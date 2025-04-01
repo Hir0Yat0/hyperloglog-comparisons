@@ -21,7 +21,7 @@ impl HLL {
         }
     }
 
-    pub fn read_stream(&mut self, input_stream: Box<dyn Iterator<Item = u64>>){
+    pub fn read_stream(&mut self, input_stream: &mut Box<dyn Iterator<Item = u64>>){
         input_stream.map(|data| self.hash_function.hash64(data))
             .map(|hashed_data| (Self::get_bucket_idx(self.num_bucket_bits, hashed_data), Self::get_data_bits(self.num_bucket_bits, hashed_data)))
             .for_each(|(bucket_idx, data_bits)| {
@@ -31,6 +31,14 @@ impl HLL {
                 }
             })
         ;
+    }
+    pub fn read_data(&mut self, data: u64){
+        let hashed_data = self.hash(data);
+        let (bucket_idx, data_bits) = (Self::get_bucket_idx(self.num_bucket_bits, hashed_data), Self::get_data_bits(self.num_bucket_bits, hashed_data));
+        let leading_zeros = data_bits.leading_zeros() as usize;
+        if leading_zeros < self.buckets.get(bucket_idx).unwrap_or(&0).clone() {
+            self.buckets[bucket_idx] = leading_zeros;
+        }
     }
     
     pub fn get_cardinality(&mut self) -> f64 {
