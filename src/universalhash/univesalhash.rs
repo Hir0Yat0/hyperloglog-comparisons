@@ -47,4 +47,8 @@ impl UniversalHashFunction {
     pub fn hash64(&self, val: u64) -> u64 {
         self.hash128(val) as u64
     }
+
+    pub fn hash32(&self, val: u64) -> u32 {
+        self.hash64(val) as u32
+    }
 }
