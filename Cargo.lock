@@ -31,6 +31,8 @@ name = "hyperloglog-comparisons"
 version = "0.1.0"
 dependencies = [
  "rand",
+ "vint64",
+ "vlq-rust",
 ]
 
 [[package]]
@@ -118,6 +120,18 @@ name = "unicode-ident"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a5f39404a5da50712a4c1eecf25e90dd62b613502b7e925fd4e4d19b5c96512"
+
+[[package]]
+name = "vint64"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "af230110bdaa403224be962f066ad736ab945502d9cee453d9fa3fdb7f85a5cb"
+
+[[package]]
+name = "vlq-rust"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1c2f24977c400a9411331c3ce2e558e29b36789d40da31ddaf7f14bb71332083"
 
 [[package]]
 name = "wasi"
