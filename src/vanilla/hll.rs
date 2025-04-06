@@ -13,7 +13,7 @@ pub struct HLL {
 impl HLL {
     pub fn new(num_bucket_bits: usize) -> Self {
         let num_buckets = 1 << num_bucket_bits;
-        dbg!(num_bucket_bits);
+        // dbg!(num_bucket_bits);
         HLL { 
             num_bucket_bits: num_bucket_bits,
             num_buckets: num_buckets,
@@ -72,7 +72,7 @@ impl HLL {
 
     fn compute_estimates(&mut self) -> f64 {
         let raw_estimates = self.bias_correction_value * Self::compute_mean_max_leading_zeroes(&self.buckets);
-        println!("raw_estimates: {}",raw_estimates);
+        // println!("raw_estimates: {}",raw_estimates);
         Self::perform_correction(raw_estimates, &self.buckets)
     }
 
@@ -82,15 +82,15 @@ impl HLL {
 
     fn perform_correction(raw_estimates: f64, buckets: &Vec<usize>) -> f64 {
         if Self::is_small_range(raw_estimates, buckets.len()) {
-            println!("is_small_range");
+            // println!("is_small_range");
             Self::perform_small_range_correction(raw_estimates, buckets)
         }
         else if Self::is_large_range(raw_estimates) {
-            println!("is_large_range");
+            // println!("is_large_range");
             Self::perform_large_range_correction(raw_estimates)
         }
         else {
-            println!("is_normal_range?");
+            // println!("is_normal_range?");
             raw_estimates
         }
     }
@@ -102,7 +102,7 @@ impl HLL {
     fn perform_small_range_correction(raw_estimates: f64, buckets: &Vec<usize>) -> f64 {
         let num_empty_buckets = Self::get_num_empty_buckets(buckets);
         if num_empty_buckets != 0 {
-            println!("Linear Countings!");
+            // println!("Linear Countings!");
             Self::get_linear_counting_cardinality_estimates(buckets.len(), num_empty_buckets)
         }
         else {
@@ -113,8 +113,8 @@ impl HLL {
     fn get_linear_counting_cardinality_estimates(num_buckets: usize, num_empty_buckets: usize) -> f64 {
         let num_buckets_f64 = num_buckets as f64;
         let num_empty_buckets_f64 = num_empty_buckets as f64;
-        dbg!(num_buckets_f64);
-        dbg!(num_empty_buckets_f64);
+        // dbg!(num_buckets_f64);
+        // dbg!(num_empty_buckets_f64);
         num_buckets_f64 * f64::ln(num_buckets_f64 / num_empty_buckets_f64)
     }
     
